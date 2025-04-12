@@ -1,0 +1,72 @@
+.sign{
+    background-color:rgb(7, 204, 138);
+     width:400px; 
+     height:300px ;
+     padding:60px 0px ;
+     border-radius:5px;
+     position: relative;
+     top:120px;
+     left:500px; 
+ }
+button{
+    padding:12px 40px;
+    background-color:greenyellow;
+    border:none;
+    border-radius:3px;
+    font-size:18px;
+    position: relative;
+    top:60px;
+    left:40px; 
+    cursor: pointer;
+}
+h1{
+    text-align:center;
+    position: relative;
+    top:-60px;
+}
+.username{
+    position:relative;
+    top:-10px;
+
+}
+.password{ 
+
+    position:relative;
+    top:30px;
+    
+}
+input{
+    border:2px solid blue;
+    border-radius:2px;
+    padding:15px 80px;
+    font-style:oblique;
+    position:relative;
+    left:40px ;  
+}
+label{
+    font-size:20px;
+    position:relative;
+    top:-8px;
+}
+p{
+    position: relative;
+    top:30px;
+    left:40px ;
+}
+#fafa{
+    position:relative;
+    top:-25px; 
+    left:330px;
+}
+#lock{
+    position:relative;
+    top:-25px; 
+    left:330px;
+}
+a{
+    position: relative;
+    top:45px;
+    left:70px;
+    font-size:20px;
+    text-decoration: none;
+}

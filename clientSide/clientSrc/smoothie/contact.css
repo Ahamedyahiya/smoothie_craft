@@ -1,0 +1,40 @@
+.main-form{
+    background-color: burlywood;
+    width:400px;
+    height:500px;
+    position: relative;
+    top:100px;
+    left:500px;
+}
+.uname{
+    position: relative;
+    left:50px;   
+    top:120px;
+}
+.uemail{
+    position: relative;
+    left:50px;
+    top:150px;
+}
+.umessage{
+    position: relative;
+    left:50px;
+    top:180px;
+}
+input{
+    padding:10px 60px ;
+}
+label{
+    position: relative;
+    top:-10px;
+    font-family:Arial;
+    font-size:1.2em;
+}
+button{
+    position: relative;
+    top:20px;
+    border:none;
+    background-color:orangered;
+    padding:15px 40px;
+    font-size:1.2em;
+}

@@ -1,0 +1,9 @@
+li{
+    list-style-type: circle;
+    font-size:1.5em;
+    line-height:1.8em;
+}
+span{
+    font-family:"Times New Roman";
+    font-weight: bold;
+}

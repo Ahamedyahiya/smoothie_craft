@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8" />
+  <title> <h1>🍓Create Smoothie</h1></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #fff3e6, #ffe0c7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px 30px;
+      max-width: 800px;
+      width: 100%;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 700;
+      color: #be185d;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 20px;
+      color: #4b1c38;
+      display: block;
+      font-size: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 14px;
+      background-color: #fffdf9;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+    }
+
+    .upload-box {
+      border: 2px dashed #fbbf24;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      background: #fffbea;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .upload-box:hover {
+      background-color: #fff3c4;
+    }
+
+    .upload-hint {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    .image-preview-container {
+      display: none;
+      margin-top: 12px;
+      position: relative;
+      width: max-content;
+    }
+
+    #previewImage {
+      max-height: 180px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid #eee;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: -20px;
+      right: -16px;
+      background: transparent;
+      color: #f87171;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1px solid transparent;
+      text-align: center;
+      line-height: 24px;
+      cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      gap: 14px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    }
+
+    .btn-save:hover {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+
+    .btn-clear {
+      background: #f87171;
+      color: white;
+      box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
+    }
+
+    .btn-clear:hover {
+      background-color: #dc2626;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 249, 240, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #be185d;
+      z-index: 999;
+      animation: fadeIn 0.3s ease-in-out;
+      display: none;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .smoothie-loader {
+      font-size: 50px;
+      animation: spinBounce 1.5s infinite ease-in-out;
+      margin-bottom: 12px;
+    }
+
+    @keyframes spinBounce {
+      0% { transform: rotate(0deg) translateY(0); }
+      25% { transform: rotate(15deg) translateY(-4px); }
+      50% { transform: rotate(-15deg) translateY(2px); }
+      75% { transform: rotate(10deg) translateY(-3px); }
+      100% { transform: rotate(0deg) translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="smoothie-loader">🥤</div>
+    Submitting your smoothie magic...
+  </div>
+
+  <div class="card">
+     <h2>🍓Create Smoothie</h2>
+    <form id="smoothieForm" enctype="multipart/form-data">
+      <input type="hidden" id="smoothieId" name="smoothieId">
+
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="ingredients">Ingredients</label>
+      <textarea id="ingredients" name="ingredients" required></textarea>
+
+      <label for="directions">Directions</label>
+      <textarea id="directions" name="directions" required></textarea>
+
+      <label for="nutrition">Nutrition</label>
+      <textarea id="nutrition" name="nutrition" required></textarea>
+
+      <label for="calories">Calories</label>
+      <input type="number" id="calories" name="calories" required>
+
+      <label for="image">Smoothie Image</label>
+      <input type="file" id="image" name="image" accept="image/*" hidden required>
+      <div class="upload-box" onclick="imageInput.click()">
+        <p>📁 Click or drag an image here to upload</p>
+        <p class="upload-hint">Only one image allowed (JPEG, PNG)</p>
+      </div>
+
+      <div class="image-preview-container" id="imagePreviewContainer">
+        <button type="button" class="close-icon" onclick="clearImage()">×</button>
+        <img id="previewImage" src="#" alt="Image Preview" />
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-save">🥤 Submit Smoothie</button>
+        <button type="button" class="btn-clear" onclick="resetForm()">Reset</button>
+      </div>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const smoothieId = urlParams.get("id");
+    const form = document.getElementById("smoothieForm");
+    const message = document.getElementById("message");
+    const previewImage = document.getElementById("previewImage");
+    const imageInput = document.getElementById("image");
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    const uploadBox = document.querySelector(".upload-box");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+
+
+  // Populate form if in edit mode
+    if (smoothieId) {
+      fetch(`http://localhost:8080/api/smoothies/getSmoothie/${smoothieId}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Smoothie not found");
+          return res.json();
+        })
+        .then(data => {
+          document.getElementById("smoothieId").value = data.id;
+          document.getElementById("title").value = data.title;
+          document.getElementById("description").value = data.description;
+          document.getElementById("ingredients").value = data.ingredients;
+          document.getElementById("directions").value = data.directions;
+          document.getElementById("nutrition").value = data.nutrition;
+          document.getElementById("calories").value = data.calories;
+
+          if (data.smoothieImage) {
+            previewImage.src = data.smoothieImage.replaceAll("\\", "/");
+            imagePreviewContainer.style.display = "block";
+            uploadBox.style.display = "none";
+            imageInput.required = false;
+          }
+        })
+        .catch(error => {
+          message.textContent = "❌ Failed to load smoothie details.";
+          message.style.color = "red";
+        });
+    }
+
+
+    imageInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (this.files.length > 1) {
+        alert("Only one image allowed.");
+        this.value = "";
+        return;
+      }
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+          imagePreviewContainer.style.display = "block";
+          uploadBox.style.display = "none";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        clearImage();
+      }
+    });
+
+    function clearImage() {
+      imageInput.value = "";
+      previewImage.src = "#";
+      imagePreviewContainer.style.display = "none";
+      uploadBox.style.display = "block";
+    }
+
+    function resetForm() {
+      form.reset();
+      clearImage();
+      message.textContent = "";
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      loadingOverlay.style.display = "flex";
+      const formData = new FormData(form);
+      if (smoothieId) {
+        fetch(`http://localhost:8080/api/smoothies/update?id=${smoothieId}`, {
+        method: "PUT",
+        body: formData
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to save smoothie.");
+        return res.json();
+      })
+      .then(data => {
+        message.textContent = "✅ Smoothie saved successfully!";
+        message.style.color = "green";
+        form.reset();
+        clearImage();
+      })
+      .catch(error => {
+        message.textContent = "❌ Error: " + error.message;
+        message.style.color = "red";
+      })
+      .finally(() => {
+        loadingOverlay.style.display = "none";
+        setTimeout(() => message.textContent = "", 2500);
+      });
+      }else{
+        fetch("http://localhost:8080/api/smoothies/save", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to save smoothie.");
+        return res.json();
+      })
+      .then(data => {
+        message.textContent = "✅ Smoothie saved successfully!";
+        message.style.color = "green";
+        form.reset();
+        clearImage();
+      })
+      .catch(error => {
+        message.textContent = "❌ Error: " + error.message;
+        message.style.color = "red";
+      })
+      .finally(() => {
+        loadingOverlay.style.display = "none";
+        setTimeout(() => message.textContent = "", 2500);
+      });
+      }
+
+    });
+  </script>
+</body>
+<<<<<<< HEAD
+</html>
+=======
+</html>
+>>>>>>> 2a4be36 (index.html file modify)

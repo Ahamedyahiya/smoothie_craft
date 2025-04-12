@@ -1,0 +1,55 @@
+.main-container{
+    position: relative;
+    top:70px;
+    left:500px;
+    background-color: cadetblue;
+    width:400px;
+    height:500px;
+}
+h2{
+    font-size:2.2em;
+    text-align: center;
+    position: relative;
+    top:30px;
+}
+ .uname{
+    position: relative;
+    top:50px;
+    left:50px;
+}
+ .uemail{
+    position: relative;
+    top:70px;
+    left:50px;
+}
+ .upassword{
+    position: relative;
+    top:100px;
+    left:50px;
+}
+input{
+    padding:8px 60px;
+}
+button{
+    font-size:1.2em;
+    padding:13px 10px;
+    background-color: blue;
+    border:none;
+    position: relative;
+    top:130px;
+    left:50px;
+}
+label{
+    font-size:1.5em;
+    position: relative;
+    top:-8px;
+}
+p{
+    position: relative;
+    top:140px;
+    left:100px;
+}
+a{
+    text-decoration: none;
+    font-size:1.2em;
+}
